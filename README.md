@@ -1,4 +1,4 @@
-yes ou no 
+yes
 #define MAX_LIVROS 10
 
 struct Livro {
