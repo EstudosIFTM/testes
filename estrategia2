@@ -1,0 +1,102 @@
+YES
+#include <stdio.h>
+
+struct No {
+    int valor;
+    No* prox;
+
+    No() {
+        prox = NULL;
+    }
+
+    No(int _valor) {
+        valor = _valor;
+        prox = NULL;
+    }
+};
+
+struct Lista {
+    No* inicio;
+    No* fim;
+    int n;
+
+    Lista() {
+        inicio = NULL;
+        fim = NULL;
+        n = 0;
+    }
+
+    void inserirOrdenadoCrescente(int valor) {
+        No* novo = new No(valor);
+        if (inicio == NULL || inicio->valor > valor) {
+            novo->prox = inicio;
+            inicio = novo;
+            if (fim == NULL) fim = novo;
+        } else {
+            No* atual = inicio;
+            while (atual->prox != NULL && atual->prox->valor < valor) {
+                atual = atual->prox;
+            }
+            novo->prox = atual->prox;
+            atual->prox = novo;
+            if (atual == fim) fim = novo;
+        }
+        n++;
+    }
+
+    void inserirOrdenadoDecrescente(int valor) {
+        No* novo = new No(valor);
+        if (inicio == NULL || inicio->valor < valor) {
+            novo->prox = inicio;
+            inicio = novo;
+            if (fim == NULL)
+
+                fim = novo;
+        } else {
+
+            No* atual = inicio;
+
+            while (atual->prox != NULL && atual->prox->valor > valor) {
+                atual = atual->prox;
+            }
+            novo->prox = atual->prox;
+            atual->prox = novo;
+            if (atual == fim)
+                fim = novo;
+        }
+        n++;
+    }
+
+    void imprimir() {
+        No* aux = inicio;
+        while (aux != NULL) {
+            printf("%d\n", aux->valor);
+            aux = aux->prox;
+        }
+    }
+};
+
+int main() {
+    Lista l;
+
+    int N, valor;
+
+    scanf("%d",&N);
+
+    Lista pares;
+    Lista impares;
+
+    for (int i = 0; i < N; i++) {
+        scanf("%d",&valor);
+        if (valor % 2 == 0) {
+            pares.inserirOrdenadoCrescente(valor);
+        } else {
+            impares.inserirOrdenadoDecrescente(valor);
+        }
+    }
+
+    pares.imprimir();
+    impares.imprimir();
+
+    return 0;
+}
