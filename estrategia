@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+
+struct No {
+    int valor;
+    No* prox;
+
+    No() {
+        prox = NULL;
+    }
+
+    No(int _valor) {
+        valor = _valor;
+        prox = NULL;
+    }
+};
+
+struct Lista {
+    No* inicio;
+    No* fim;
+    int n;
+
+    Lista() {
+        inicio = NULL;
+        fim = NULL;
+        n = 0;
+    }
+
+    void inserirFinal(int valor) {
+        No* novo = new No(valor);
+        if (inicio == NULL) {
+            inicio = novo;
+            fim = novo;
+        } else {
+            fim->prox = novo;
+            fim = novo;
+        }
+        n++;
+    }
+
+    int calcularPontuacao() {
+        int soma = 0;
+        No* aux = inicio;
+        while (aux != NULL) {
+            soma += aux->valor;
+            aux = aux->prox;
+        }
+        return soma;
+    }
+};
+
+int main() {
+    int J, R;
+     scanf("%d",&J);
+       scanf("%d",&R);
+
+    Lista jogadores[J];
+
+    for (int i = 0; i < J * R; i++) {
+        int pontos;
+       scanf("%d",&pontos);
+        jogadores[i % J].inserirFinal(pontos);
+    }
+
+    int maxPontuacao = -1;
+    int vencedor = -1;
+
+    for (int i = 0; i < J; i++) {
+        int pontuacao = jogadores[i].calcularPontuacao();
+        if (pontuacao > maxPontuacao || (pontuacao == maxPontuacao && i > vencedor)) {
+            maxPontuacao = pontuacao;
+            vencedor = i;
+        }
+    }
+
+    printf("%d",vencedor + 1);
+
+    return 0;
+}
