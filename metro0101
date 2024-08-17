@@ -1,0 +1,82 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct No {
+    string valor;
+    No* prox;
+
+    No() : valor(""), prox(NULL) {}
+
+    No(const string& _valor) : valor(_valor), prox(NULL) {}
+};
+
+struct Lista {
+    No* inicio;
+    No* fim;
+    int n;
+
+    Lista() {
+        inicio = NULL;
+        fim = NULL;
+        n = 0;
+    }
+
+    void inserirFinal(const string& valor) {
+        No* novo = new No(valor);
+        if (inicio == NULL) {
+            inicio = novo;
+            fim = novo;
+        } else {
+            fim->prox = novo;
+            fim = novo;
+        }
+        n++;
+    }
+
+    string encontrarDirecao(const string& origem, const string& destino) {
+        No* atual = inicio;
+        bool encontrouOrigem = false;
+
+        while (atual != NULL) {
+            if (atual->valor == origem) {
+                encontrouOrigem = true;
+            } else if (encontrouOrigem && atual->valor == destino) {
+                return "direita";
+            }
+            atual = atual->prox;
+        }
+
+        return "esquerda";
+    }
+};
+
+int main() {
+    Lista lista;
+    lista.inserirFinal("PALMEIRAS BARRA FUNDA");
+    lista.inserirFinal("MARECHAL DEODORO");
+    lista.inserirFinal("SANTA CECILIA");
+    lista.inserirFinal("REPUBLICA");
+    lista.inserirFinal("ANHANGABAU");
+    lista.inserirFinal("SE");
+    lista.inserirFinal("PEDRO II");
+    lista.inserirFinal("BRAS");
+    lista.inserirFinal("BRESSER MOOCA");
+    lista.inserirFinal("BELEM");
+    lista.inserirFinal("TATUAPE");
+    lista.inserirFinal("CARRAO");
+    lista.inserirFinal("PENHA");
+    lista.inserirFinal("VILA MATILDE");
+    lista.inserirFinal("GUILHERMINA ESPERANCA");
+    lista.inserirFinal("PATRIARCA");
+    lista.inserirFinal("ARTUR ALVIM");
+    lista.inserirFinal("CORINTHIANS ITAQUERA");
+
+    string origem, destino;
+    cin >> origem >> destino;
+
+    cout << lista.encontrarDirecao(origem, destino) << endl;
+
+    return 0;
+}
