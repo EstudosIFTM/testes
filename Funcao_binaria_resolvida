@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct No
+{
+    int valor;
+    No *prox;
+};
+
+struct Pilha
+{
+    No *topo;
+    int n;
+
+    Pilha()
+    {
+        topo = NULL;
+        n = 0;
+    }
+
+    bool vazia()
+    {
+        return (topo == NULL);
+    }
+
+    void inserir(int v)
+    {
+        No *novo = new No();
+        novo->valor = v;
+        novo->prox = topo;
+        topo = novo;
+        n++;
+    }
+
+    void remover()
+    {
+        if (!vazia())
+        {
+            No *aux = topo;
+            topo = topo->prox;
+            delete(aux);
+            n--;
+        }
+    }
+
+    int topoPilha()
+    {
+        if (vazia())
+        {
+            return -1;
+        }
+        return topo->valor;
+    }
+
+    void decimalParaBinario(int x)
+    {
+
+
+        if (x == 0)
+        {
+            printf("0");
+            return;
+        }
+
+        while (x > 0)
+        {
+            inserir(x % 2);
+            x = x / 2;
+        }
+
+
+        while (!vazia())
+        {
+            printf("%d",topoPilha()) ;
+            remover();
+        }
+        printf("\n");
+    }
+
+
+
+
+
+};
+
+
+int main()
+{
+    int N, X;
+    Pilha p;
+
+    scanf("%d",&N);
+    for (int i = 0; i < N; i++)
+    {
+        scanf("%d",&X);
+        p.decimalParaBinario(X);
+    }
+
+    return 0;
+}
